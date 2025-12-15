@@ -2,7 +2,7 @@ Name: service.media
 ListenOn: 127.0.0.1:20650
 Etcd:
   Hosts:
-    - 127.0.0.1:2379
+    - 10.24.85.117:2379
   Key: service.media
 Mysql:
   Addr: 127.0.0.1:3306
@@ -18,5 +18,5 @@ Cache:
 Dfs:
   Etcd:
     Hosts:
-      - 127.0.0.1:2379
+      - 10.24.85.117:2379
     Key: service.dfs

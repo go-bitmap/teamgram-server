@@ -2,7 +2,7 @@ Name: service.idgen
 ListenOn: 127.0.0.1:20660
 Etcd:
   Hosts:
-    - 127.0.0.1:2379
+    - 10.24.85.117:2379
   Key: service.idgen
 Log:
   Mode: file

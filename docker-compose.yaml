@@ -1,6 +1,9 @@
 services:
   teamgram:
-    build: .
+    image: teamgram:latest
+    container_name: teamgram
+    volumes:
+      - ./teamgramd:/app
     restart: always
     ports:
       - "10443:10443"

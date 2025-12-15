@@ -2,7 +2,7 @@ Name: service.media
 ListenOn: 127.0.0.1:20650
 Etcd:
   Hosts:
-    - 127.0.0.1:2379
+    - 10.24.85.117:2379
   Key: service.media
 Timeout: 0
 Log:
@@ -19,6 +19,6 @@ Cache:
 Dfs:
   Etcd:
     Hosts:
-      - 127.0.0.1:2379
+      - 10.24.85.117:2379
     Key: service.dfs
   Timeout: 0

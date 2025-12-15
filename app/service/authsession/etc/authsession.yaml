@@ -2,7 +2,7 @@ Name: service.authsession
 ListenOn: 127.0.0.1:20450
 Etcd:
   Hosts:
-    - 127.0.0.1:2379
+    - 10.24.85.117:2379
   Key: service.authsession
 Mysql:
   Addr: 127.0.0.1:3306

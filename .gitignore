@@ -58,3 +58,5 @@ teamgramd/logs/*
 /v2/
 app/service/dfs/internal/imaging/abc/abc
 v2
+**/logs
+**/log

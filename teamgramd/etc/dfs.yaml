@@ -2,7 +2,7 @@ Name: service.dfs
 ListenOn: 127.0.0.1:20640
 Etcd:
   Hosts:
-    - 127.0.0.1:2379
+    - 10.24.85.117:2379
   Key: service.dfs
 Timeout: 0
 MiniHttp:
@@ -24,7 +24,7 @@ Minio:
 IdGen:
   Etcd:
     Hosts:
-      - 127.0.0.1:2379
+      - 10.24.85.117:2379
     Key: service.idgen
 SSDB:
   - Host: 127.0.0.1:6379 # if use pika, change to 9221

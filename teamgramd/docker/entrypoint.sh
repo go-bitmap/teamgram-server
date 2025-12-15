@@ -22,7 +22,7 @@ createConfigs() {
   for file in `ls $CONFIG_TEMPLATES_DIR`; do
     cat $CONFIG_TEMPLATES_DIR/$file \
       | sed 's#ListenOn: 127.0.0.1#ListenOn: '"$TEAMGRAM_HOST"'#g' \
-      | sed "s#127.0.0.1:2379#$ETCD_URL#g" \
+      | sed "s#10.24.85.117:2379#$ETCD_URL#g" \
       | sed "s#127.0.0.1:6379#$REDIS_HOST#g" \
       | sed "s#localhost:6379#$REDIS_HOST#g" \
       | sed "s#root:@tcp(127.0.0.1:3306)/teamgram?charset=utf8mb4#$MYSQL_URI#g" \

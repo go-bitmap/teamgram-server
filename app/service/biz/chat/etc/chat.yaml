@@ -2,7 +2,7 @@ Name: service.biz_service.chat
 ListenOn: 127.0.0.1:20500
 Etcd:
   Hosts:
-    - 127.0.0.1:2379
+    - 10.24.85.117:2379
   Key: service.biz_service.chat
 Mysql:
   Addr: 127.0.0.1:3306
@@ -18,5 +18,5 @@ Cache:
 MediaClient:
   Etcd:
     Hosts:
-      - 127.0.0.1:2379
+      - 10.24.85.117:2379
     Key: service.media

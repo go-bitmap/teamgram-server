@@ -2,7 +2,7 @@ Name: service.biz_service.user
 ListenOn: 127.0.0.1:20610
 Etcd:
   Hosts:
-    - 127.0.0.1:2379
+    - 10.24.85.117:2379
   Key: service.biz_service.user
 Mysql:
   Addr: 127.0.0.1:3306
@@ -21,5 +21,5 @@ MediaClient:
   #    - 127.0.0.1:20650
   Etcd:
     Hosts:
-      - 127.0.0.1:2379
+      - 10.24.85.117:2379
     Key: service.media

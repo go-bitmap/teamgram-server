@@ -1,11 +1,6 @@
-FROM golang:1.21.13 AS builder
-WORKDIR /app
-COPY . .
-RUN ./build.sh
-
 FROM ubuntu:latest
 RUN apt update -y && apt install -y ffmpeg && apt-get clean
 WORKDIR /app
-COPY --from=builder /app/teamgramd/ /app/
+COPY ./teamgramd/ /app/
 RUN chmod +x /app/docker/entrypoint.sh
 ENTRYPOINT /app/docker/entrypoint.sh

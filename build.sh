@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 
-PWD=`pwd`
+# 构建脚本 - 构建所有服务的二进制文件（不构建 Docker 镜像）
+# 如需构建 Docker 镜像，请使用 build-docker.sh
+
+PWD=$(pwd)
 TEAMGRAMAPP=${PWD}"/app"
 INSTALL=${PWD}"/teamgramd"
+export GOOS=linux
+export GOARCH=amd64
 
 echo "build idgen ..."
 cd ${TEAMGRAMAPP}/service/idgen/cmd/idgen

@@ -2,7 +2,7 @@ Name: messenger.msg.inbox
 ListenOn: 127.0.0.1:20390
 Etcd:
   Hosts:
-    - 127.0.0.1:2379
+    - 10.24.85.117:2379
   Key: messenger.msg.inbox
 
 InboxConsumer:
@@ -27,17 +27,17 @@ KV:
 IdgenClient:
   Etcd:
     Hosts:
-      - 127.0.0.1:2379
+      - 10.24.85.117:2379
     Key: service.idgen
 UserClient:
   Etcd:
     Hosts:
-      - 127.0.0.1:2379
+      - 10.24.85.117:2379
     Key: service.biz_service
 ChatClient:
   Etcd:
     Hosts:
-      - 127.0.0.1:2379
+      - 10.24.85.117:2379
     Key: service.biz_service
 
 SyncClient:
