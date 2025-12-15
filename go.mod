@@ -4,7 +4,6 @@ go 1.21
 
 require (
 	github.com/bwmarrin/snowflake v0.3.1-0.20221123153919-bc74ab286f15
-	github.com/chai2010/webp v1.4.0
 	github.com/disintegration/imaging v1.6.3-0.20201218193011-d40f48ce0f09
 	github.com/gobwas/httphead v0.1.0
 	github.com/gobwas/ws v1.4.0

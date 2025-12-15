@@ -19,14 +19,48 @@
 package core
 
 import (
+	"github.com/teamgram/marmota/pkg/strings2"
+	"github.com/teamgram/marmota/pkg/utils"
 	"github.com/teamgram/proto/mtproto"
+	"github.com/teamgram/teamgram-server/app/service/biz/username/username"
 )
 
 // ChannelsCheckUsername
 // channels.checkUsername#10e6bd2c channel:InputChannel username:string = Bool;
 func (c *UsernamesCore) ChannelsCheckUsername(in *mtproto.TLChannelsCheckUsername) (*mtproto.Bool, error) {
-	// TODO: not impl
-	c.Logger.Errorf("channels.checkUsername blocked, License key from https://teamgram.net required to unlock enterprise features.")
+	// Check username format
+	// You can choose a username on Telegram.
+	// If you do, other people will be able to find
+	// you by this username and contact you
+	// without knowing your phone number.
+	//
+	// You can use a-z, 0-9 and underscores.
+	// Minimum length is 5 characters.";
+	//
+	if len(in.Username) < username.MinUsernameLen ||
+		!strings2.IsAlNumString(in.Username) ||
+		utils.IsNumber(in.Username[0]) {
+		err := mtproto.ErrUsernameInvalid
+		c.Logger.Errorf("channels.checkUsername#10e6bd2c - format error: %v", err)
+		return nil, err
+	} else {
+		existed, err := c.svcCtx.Dao.UsernameClient.UsernameCheckChannelUsername(c.ctx, &username.TLUsernameCheckChannelUsername{
+			ChannelId: in.Channel.GetChannelId(),
+			Username:  in.GetUsername(),
+		})
+		if err != nil {
+			return nil, err
+		}
 
-	return nil, mtproto.ErrEnterpriseIsBlocked
+		switch existed.GetPredicateName() {
+		case username.Predicate_usernameExistedNotMe:
+			err = mtproto.ErrUsernameOccupied
+			c.Logger.Errorf("channels.checkUsername#10e6bd2c - exists username: %v", err)
+			return mtproto.BoolFalse, nil
+		default:
+			break
+		}
+	}
+
+	return mtproto.BoolTrue, nil
 }

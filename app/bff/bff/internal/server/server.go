@@ -87,6 +87,7 @@ func (s *Server) Initialize() error {
 			grpcServer,
 			configuration_helper.New(configuration_helper.Config{
 				RpcServerConf: c.RpcServerConf,
+				HelpClient:    c.BizServiceClient,
 			}))
 
 		// qrcode_helper

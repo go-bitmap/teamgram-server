@@ -6,7 +6,7 @@ Etcd:
   Key: messenger.msg
 Mysql:
   Addr: 127.0.0.1:3306
-  DSN: root:@tcp(127.0.0.1:3306)/teamgram?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+  DSN: teamgram:teamgram@tcp(127.0.0.1:3306)/teamgram?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
   Active: 64
   Idle: 64
   IdleTimeout: 4h
@@ -35,9 +35,9 @@ ChatClient:
 InboxClient:
   Topic:   "Inbox-T"
   Brokers:
-    - 127.0.0.1:9092
+    - kafka:9092
 
 SyncClient:
   Topic:   "Sync-T"
   Brokers:
-    - 127.0.0.1:9092
+    - kafka:9092

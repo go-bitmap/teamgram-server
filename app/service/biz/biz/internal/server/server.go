@@ -28,6 +28,8 @@ import (
 	"github.com/teamgram/teamgram-server/app/service/biz/code/code"
 	dialog_helper "github.com/teamgram/teamgram-server/app/service/biz/dialog"
 	"github.com/teamgram/teamgram-server/app/service/biz/dialog/dialog"
+	help_helper "github.com/teamgram/teamgram-server/app/service/biz/help"
+	"github.com/teamgram/teamgram-server/app/service/biz/help/help"
 	message_helper "github.com/teamgram/teamgram-server/app/service/biz/message"
 	"github.com/teamgram/teamgram-server/app/service/biz/message/message"
 	updates_helper "github.com/teamgram/teamgram-server/app/service/biz/updates"
@@ -129,6 +131,14 @@ func (s *Server) Initialize() error {
 		username.RegisterRPCUsernameServer(
 			grpcServer,
 			username_helper.New(username_helper.Config{
+				RpcServerConf: c.RpcServerConf,
+				Mysql:         c.Mysql,
+				Cache:         c.Cache,
+			}))
+		// help_helper
+		help.RegisterRPCHelpServer(
+			grpcServer,
+			help_helper.New(help_helper.Config{
 				RpcServerConf: c.RpcServerConf,
 				Mysql:         c.Mysql,
 				Cache:         c.Cache,

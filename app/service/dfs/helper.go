@@ -48,10 +48,6 @@ type (
 
 // imaging - imaging
 var (
-	OpenWebp   = imaging.OpenWebp
-	DecodeWebp = imaging.DecodeWebp
-	EncodeWebp = imaging.EncodeWebp
-
 	Open       = imaging.Open
 	Decode     = imaging.Decode
 	Resize     = imaging.Resize

@@ -1,0 +1,61 @@
+/*
+ * WARNING! All changes made in this file will be lost!
+ * Created from 'scheme.tl' by 'mtprotoc'
+ *
+ * Copyright (c) 2024-present,  Teamgram Authors.
+ *  All rights reserved.
+ *
+ * Author: teamgramio (teamgram.io@gmail.com)
+ */
+
+syntax = "proto3";
+
+package help;
+
+import "google/protobuf/wrappers.proto";
+import "schema.tl.core_types.proto";
+import "schema.tl.transport.proto";
+import "schema.tl.sync.proto";
+
+option go_package = "github.com/teamgram/teamgram-server/app/service/biz/help/help";
+
+enum TLConstructor {
+    CRC32_UNKNOWN = 0;
+    CRC32_help_getCountriesList = 1935116200;
+}
+
+// HelpGetCountriesList
+// help.getCountriesList = help.CountriesList;
+message TL_help_getCountriesList {
+    TLConstructor constructor = 1;
+}
+
+//--------------------------------------------------------------------------------------------
+// rpc
+
+service RPCHelp {
+    rpc help_getCountriesList(TL_help_getCountriesList) returns (Help_CountriesList) {}
+}
+
+// Help_CountriesList
+message Help_CountriesList {
+    repeated Help_Country countries = 1;
+    int32 hash = 2;
+}
+
+// Help_Country
+message Help_Country {
+    bool hidden = 1;
+    string iso2 = 2;
+    string default_name = 3;
+    google.protobuf.StringValue name = 4;
+    repeated Help_CountryCode country_codes = 5;
+}
+
+// Help_CountryCode
+message Help_CountryCode {
+    string country_code = 1;
+    repeated string prefixes = 2;
+    repeated string patterns = 3;
+}
+

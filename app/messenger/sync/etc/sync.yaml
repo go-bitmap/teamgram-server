@@ -9,7 +9,7 @@ SyncConsumer:
   Topics:
     - "Sync-T"
   Brokers:
-    - 127.0.0.1:9092
+    - kafka:9092
   Group: "Sync-MainCommunity-S"
 
 Routine:
@@ -17,8 +17,7 @@ Routine:
   Size: 100
 
 Mysql:
-  Addr: 127.0.0.1:3306
-  DSN: root:@tcp(127.0.0.1:3306)/teamgram?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+  DSN: teamgram:teamgram@tcp(127.0.0.1:3306)/teamgram?charset=utf8mb4&parseTime=true
   Active: 64
   Idle: 64
   IdleTimeout: 4h
@@ -56,13 +55,4 @@ ChatClient:
     Hosts:
       - 127.0.0.1:2379
     Key: service.biz_service
-
-PushClient:
-  Topic:   "Push-T"
-  Brokers:
-    - 127.0.0.1:9092
-BotsClient:
-  Topic:   "BotFather-T"
-  Brokers:
-    - 127.0.0.1:9092
 

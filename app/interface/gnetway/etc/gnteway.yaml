@@ -4,17 +4,26 @@ Etcd:
   Hosts:
     - 127.0.0.1:2379
   Key: interface.gateway
+RSAKey:
+  - KeyFile: "./server_pkcs1.key"
+    KeyFingerprint: "12240908862933197005"
 KeyFile: "./server_pkcs1.key"
 KeyFingerprint: "12240908862933197005"
 MaxProc: 4
-Server:
-  Addrs:
-    - 0.0.0.0:10443
-    - 0.0.0.0:5222
-    - 0.0.0.0:8801
+
+Gnetway:
+  Server:
+    - Proto: tcp
+      Addresses:
+        - 0.0.0.0:10443
+        - 0.0.0.0:5222
+    - Proto: websocket
+      Addresses:
+        - 0.0.0.0:11443
+  Multicore: false
   SendBuf: 65536
   ReceiveBuf: 65536
-  Multicore: false
+
 Session:
   Etcd:
     Hosts:

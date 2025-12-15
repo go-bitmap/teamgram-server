@@ -20,16 +20,56 @@ package core
 
 import (
 	"github.com/teamgram/proto/mtproto"
+	"github.com/teamgram/teamgram-server/app/service/biz/help/help"
 )
 
 // HelpGetCountriesList
 // help.getCountriesList#735787a8 lang_code:string hash:int = help.CountriesList;
 func (c *ConfigurationCore) HelpGetCountriesList(in *mtproto.TLHelpGetCountriesList) (*mtproto.Help_CountriesList, error) {
-	// TODO: not impl
-	c.Logger.Errorf("help.getCountriesList blocked, License key from https://teamgram.net required to unlock enterprise features.")
+	// 通过 RPC 调用 biz/help 服务获取国家列表
+	request := &help.TLHelpGetCountriesList{
+		Constructor: help.TLConstructor_CRC32_help_getCountriesList,
+	}
+	result, err := c.svcCtx.Dao.HelpClient.HelpGetCountriesList(c.ctx, request)
+	if err != nil {
+		c.Logger.Errorf("help.getCountriesList - RPC call error: %v", err)
+		// 返回空列表
+		countriesList := &mtproto.Help_CountriesList{
+			Countries: make([]*mtproto.Help_Country, 0),
+			Hash:      0,
+		}
+		return mtproto.MakeTLHelpCountriesList(countriesList).To_Help_CountriesList(), nil
+	}
 
+	// 转换 help.Help_CountriesList 为 mtproto.Help_CountriesList
+	return c.convertToMtprotoCountriesList(result), nil
+}
+
+// convertToMtprotoCountriesList 将 help.Help_CountriesList 转换为 mtproto.Help_CountriesList
+func (c *ConfigurationCore) convertToMtprotoCountriesList(in *help.Help_CountriesList) *mtproto.Help_CountriesList {
+	countries := make([]*mtproto.Help_Country, 0, len(in.Countries))
+	for _, country := range in.Countries {
+		mtprotoCountry := &mtproto.Help_Country{
+			Hidden:      country.Hidden,
+			Iso2:        country.Iso2,
+			DefaultName: country.DefaultName,
+			Name:        country.Name,
+		}
+		if len(country.CountryCodes) > 0 {
+			mtprotoCountryCodes := make([]*mtproto.Help_CountryCode, 0, len(country.CountryCodes))
+			for _, code := range country.CountryCodes {
+				mtprotoCountryCodes = append(mtprotoCountryCodes, &mtproto.Help_CountryCode{
+					CountryCode: code.CountryCode,
+					Prefixes:    code.Prefixes,
+					Patterns:    code.Patterns,
+				})
+			}
+			mtprotoCountry.CountryCodes = mtprotoCountryCodes
+		}
+		countries = append(countries, mtprotoCountry)
+	}
 	return mtproto.MakeTLHelpCountriesList(&mtproto.Help_CountriesList{
-		Countries: []*mtproto.Help_Country{},
-		Hash:      0,
-	}).To_Help_CountriesList(), nil
+		Countries: countries,
+		Hash:      in.Hash,
+	}).To_Help_CountriesList()
 }

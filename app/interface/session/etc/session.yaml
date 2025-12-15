@@ -28,10 +28,7 @@ BFFProxyClients:
         Hosts:
           - 127.0.0.1:2379
         Key: bff.bff
-    - Etcd:
-        Hosts:
-          - 127.0.0.1:2379
-        Key: messenger.biz_server.phone
+      Timeout: 0
   IDMap:
     "/mtproto.RPCTos": "bff.bff"
     #"/mtproto.RPCReports": "bff.bff"
@@ -47,12 +44,13 @@ BFFProxyClients:
     #"/mtproto.RPCSeamless": "bff.bff"
     #"/mtproto.RPCVoipCalls": "bff.bff"
     #"/mtproto.RPCChannels": "bff.bff"
-    #"/mtproto.RPCChats": "bff.bff"
+    "/mtproto.RPCChatInvites": "bff.bff"
+    "/mtproto.RPCChats": "bff.bff"
     #"/mtproto.RPCDeepLinks": "bff.bff"
     "/mtproto.RPCFiles": "bff.bff"
     #"/mtproto.RPCWebPage": "bff.bff"
     #"/mtproto.RPCSecretChats": "bff.bff"
-    #"/mtproto.RPCPassport": "bff.bff"
+    "/mtproto.RPCPassport": "bff.bff"
     "/mtproto.RPCUpdates": "bff.bff"
     #"/mtproto.RPCInlineBot": "bff.bff"
     #"/mtproto.RPCBots": "bff.bff"
@@ -83,7 +81,8 @@ BFFProxyClients:
     #"/mtproto.RPCStatistics": "bff.bff"
     #"/mtproto.RPCStickers": "bff.bff"
     "/mtproto.RPCAccount": "bff.bff"
-    "/mtproto.RPCPhotos": "bff.bff"
     "/mtproto.RPCUsernames": "bff.bff"
     #"/mtproto.RPCWallpapers": "bff.bff"
-    #"/mtproto.RPCTranslate": "bff.bff"
+    "/mtproto.RPCSavedMessageDialogs": "bff.bff"
+    "/mtproto.RPCPrivacySettings": "bff.bff"
+    "/mtproto.RPCUserChannelProfiles": "bff.bff"

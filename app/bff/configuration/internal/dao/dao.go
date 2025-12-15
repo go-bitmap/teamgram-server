@@ -18,9 +18,18 @@
 
 package dao
 
+import (
+	"github.com/teamgram/marmota/pkg/net/rpcx"
+	"github.com/teamgram/teamgram-server/app/bff/configuration/internal/config"
+	help_client "github.com/teamgram/teamgram-server/app/service/biz/help/client"
+)
+
 type Dao struct {
+	help_client.HelpClient
 }
 
-func New() *Dao {
-	return new(Dao)
+func New(c config.Config) *Dao {
+	return &Dao{
+		HelpClient: help_client.NewHelpClient(rpcx.GetCachedRpcClient(c.HelpClient)),
+	}
 }
