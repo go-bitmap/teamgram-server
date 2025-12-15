@@ -11,9 +11,10 @@ TEAMGRAMAPP=${PROJECT_ROOT}"/app"
 INSTALL=${PROJECT_ROOT}"/teamgramd"
 export GOOS=linux
 export GOARCH=amd64
+export CGO_ENABLED=0
 
 # 镜像仓库配置
-REGISTRY="harbor.imageharbor.xyz"
+REGISTRY="192.168.30.81/teamgram"
 IMAGE_PREFIX="teamgram"
 
 # 服务列表
@@ -30,47 +31,47 @@ build_service_binary() {
     case $service in
         idgen)
             cd ${TEAMGRAMAPP}/service/idgen/cmd/idgen
-            go build -o ${INSTALL}/bin/idgen
+            go build -ldflags="-s -w" -o ${INSTALL}/bin/idgen
             ;;
         status)
             cd ${TEAMGRAMAPP}/service/status/cmd/status
-            go build -o ${INSTALL}/bin/status
+            go build -ldflags="-s -w" -o ${INSTALL}/bin/status
             ;;
         dfs)
             cd ${TEAMGRAMAPP}/service/dfs/cmd/dfs
-            go build -o ${INSTALL}/bin/dfs
+            go build -ldflags="-s -w" -o ${INSTALL}/bin/dfs
             ;;
         media)
             cd ${TEAMGRAMAPP}/service/media/cmd/media
-            go build -o ${INSTALL}/bin/media
+            go build -ldflags="-s -w" -o ${INSTALL}/bin/media
             ;;
         authsession)
             cd ${TEAMGRAMAPP}/service/authsession/cmd/authsession
-            go build -o ${INSTALL}/bin/authsession
+            go build -ldflags="-s -w" -o ${INSTALL}/bin/authsession
             ;;
         biz)
             cd ${TEAMGRAMAPP}/service/biz/biz/cmd/biz
-            go build -o ${INSTALL}/bin/biz
+            go build -ldflags="-s -w" -o ${INSTALL}/bin/biz
             ;;
         msg)
             cd ${TEAMGRAMAPP}/messenger/msg/cmd/msg
-            go build -o ${INSTALL}/bin/msg
+            go build -ldflags="-s -w" -o ${INSTALL}/bin/msg
             ;;
         sync)
             cd ${TEAMGRAMAPP}/messenger/sync/cmd/sync
-            go build -o ${INSTALL}/bin/sync
+            go build -ldflags="-s -w" -o ${INSTALL}/bin/sync
             ;;
         bff)
             cd ${TEAMGRAMAPP}/bff/bff/cmd/bff
-            go build -o ${INSTALL}/bin/bff
+            go build -ldflags="-s -w" -o ${INSTALL}/bin/bff
             ;;
         session)
             cd ${TEAMGRAMAPP}/interface/session/cmd/session
-            go build -o ${INSTALL}/bin/session
+            go build -ldflags="-s -w" -o ${INSTALL}/bin/session
             ;;
         gnetway)
             cd ${TEAMGRAMAPP}/interface/gnetway/cmd/gnetway
-            go build -o ${INSTALL}/bin/gnetway
+            go build -ldflags="-s -w" -o ${INSTALL}/bin/gnetway
             ;;
         *)
             echo "Unknown service: $service"
