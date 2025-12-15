@@ -95,7 +95,7 @@ func (c *HelpCore) convertToHelpCountry(do *dataobject.HelpCountryDO) *help.Help
 	// 构建 CountryCodes
 	if do.CountryCode > 0 {
 		// 将 int32 类型的 country_code 转换为字符串格式（如 "+86"）
-		countryCodeStr := fmt.Sprintf("+%d", do.CountryCode)
+		countryCodeStr := fmt.Sprintf("%d", do.CountryCode)
 		countryCode := &help.Help_CountryCode{
 			CountryCode: countryCodeStr,
 			Prefixes:    prefixes,
