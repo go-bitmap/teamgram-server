@@ -33,7 +33,7 @@ func NewHelpCountryDAO(db *sqlx.DB) *HelpCountryDAO {
 // select id, hidden, iso2, default_name, name, country_code, prefixes, patterns, created_at, updated_at from help_country where hidden = 0 order by id
 func (dao *HelpCountryDAO) SelectAll(ctx context.Context) (rList []dataobject.HelpCountryDO, err error) {
 	var (
-		query  = "select id, hidden, iso2, default_name, name, country_code, prefixes, patterns, created_at, updated_at from help_country where hidden = 0 order by id"
+		query  = "select id, hidden, iso2, default_name, name, country_code, IFNULL(prefixes, '') as prefixes, IFNULL(patterns, '') as patterns, created_at, updated_at from help_country where hidden = 0 order by id"
 		values []dataobject.HelpCountryDO
 	)
 

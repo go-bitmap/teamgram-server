@@ -47,22 +47,22 @@ func (c *ConfigurationCore) HelpGetCountriesList(in *mtproto.TLHelpGetCountriesL
 
 // convertToMtprotoCountriesList 将 help.Help_CountriesList 转换为 mtproto.Help_CountriesList
 func (c *ConfigurationCore) convertToMtprotoCountriesList(in *help.Help_CountriesList) *mtproto.Help_CountriesList {
-	countries := make([]*mtproto.Help_Country, 0, len(in.Countries))
+	countries := make([]*mtproto.Help_Country, 0)
 	for _, country := range in.Countries {
-		mtprotoCountry := &mtproto.Help_Country{
+		mtprotoCountry := mtproto.MakeTLHelpCountry(&mtproto.Help_Country{
 			Hidden:      country.Hidden,
 			Iso2:        country.Iso2,
 			DefaultName: country.DefaultName,
 			Name:        country.Name,
-		}
+		}).To_Help_Country()
 		if len(country.CountryCodes) > 0 {
 			mtprotoCountryCodes := make([]*mtproto.Help_CountryCode, 0, len(country.CountryCodes))
 			for _, code := range country.CountryCodes {
-				mtprotoCountryCodes = append(mtprotoCountryCodes, &mtproto.Help_CountryCode{
+				mtprotoCountryCodes = append(mtprotoCountryCodes, mtproto.MakeTLHelpCountryCode(&mtproto.Help_CountryCode{
 					CountryCode: code.CountryCode,
 					Prefixes:    code.Prefixes,
 					Patterns:    code.Patterns,
-				})
+				}).To_Help_CountryCode())
 			}
 			mtprotoCountry.CountryCodes = mtprotoCountryCodes
 		}
@@ -70,6 +70,6 @@ func (c *ConfigurationCore) convertToMtprotoCountriesList(in *help.Help_Countrie
 	}
 	return mtproto.MakeTLHelpCountriesList(&mtproto.Help_CountriesList{
 		Countries: countries,
-		Hash:      in.Hash,
+		Hash:      -1137396670,
 	}).To_Help_CountriesList()
 }

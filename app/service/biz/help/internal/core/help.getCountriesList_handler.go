@@ -10,8 +10,10 @@
 package core
 
 import (
+	"context"
 	"fmt"
 
+	"github.com/teamgram/marmota/pkg/stores/sqlx"
 	"github.com/teamgram/teamgram-server/app/service/biz/help/help"
 	"github.com/teamgram/teamgram-server/app/service/biz/help/internal/dal/dataobject"
 	"github.com/zeromicro/go-zero/core/jsonx"
@@ -21,29 +23,51 @@ import (
 // HelpGetCountriesList
 // help.getCountriesList = help.CountriesList;
 func (c *HelpCore) HelpGetCountriesList(in *help.TLHelpGetCountriesList) (*help.Help_CountriesList, error) {
-	countriesList := &help.Help_CountriesList{
-		Countries: make([]*help.Help_Country, 0),
-		Hash:      0,
-	}
+	var (
+		countriesList *help.Help_CountriesList
+	)
 
-	// 从数据库查询所有国家数据
-	countryDOList, err := c.svcCtx.Dao.HelpCountryDAO.SelectAll(c.ctx)
+	err := c.svcCtx.Dao.CachedConn.QueryRow(
+		c.ctx,
+		&countriesList,
+		help.GetCountriesListCacheKey(),
+		func(ctx context.Context, conn *sqlx.DB, v interface{}) error {
+			var (
+				countryDOList []dataobject.HelpCountryDO
+				vList         []*help.Help_Country
+			)
+
+			countryDOList, err := c.svcCtx.Dao.HelpCountryDAO.SelectAll(ctx)
+			if err != nil {
+				return err
+			}
+
+			// 转换数据库对象为 help.Help_Country 对象
+			for _, do := range countryDOList {
+				country := c.convertToHelpCountry(&do)
+				if country != nil {
+					vList = append(vList, country)
+				}
+			}
+
+			// 计算 hash（简单实现，可以根据需要改进）
+			hash := int32(len(vList))
+
+			*v.(**help.Help_CountriesList) = &help.Help_CountriesList{
+				Countries: vList,
+				Hash:      hash,
+			}
+
+			return nil
+		})
+
 	if err != nil {
-		c.Logger.Errorf("help.getCountriesList - SelectAll error: %v", err)
-		return countriesList, nil
+		c.Logger.Errorf("help.getCountriesList - error: %v", err)
+		return &help.Help_CountriesList{
+			Countries: make([]*help.Help_Country, 0),
+			Hash:      0,
+		}, nil
 	}
-
-	// 转换数据库对象为 help.Help_Country 对象
-	for _, do := range countryDOList {
-		country := c.convertToHelpCountry(&do)
-		if country != nil {
-			countriesList.Countries = append(countriesList.Countries, country)
-		}
-	}
-
-	// 计算 hash（简单实现，可以根据需要改进）
-	hash := int32(len(countriesList.Countries))
-	countriesList.Hash = hash
 
 	return countriesList, nil
 }
