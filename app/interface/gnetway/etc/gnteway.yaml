@@ -2,7 +2,7 @@ Name: interface.gateway
 ListenOn: 127.0.0.1:20110
 Etcd:
   Hosts:
-    - 10.24.85.117:2379
+    - 127.0.0.1:2379
   Key: interface.gateway
 RSAKey:
   - KeyFile: "./server_pkcs1.key"
@@ -27,5 +27,6 @@ Gnetway:
 Session:
   Etcd:
     Hosts:
-      - 10.24.85.117:2379
+      - 127.0.0.1:2379
     Key: interface.session
+  Timeout: 10000

@@ -27,6 +27,7 @@ import (
 	sessionclient "github.com/teamgram/teamgram-server/app/interface/session/client"
 	"github.com/teamgram/teamgram-server/app/interface/session/session"
 
+	"github.com/teamgram/marmota/pkg/net/rpcx"
 	"github.com/zeromicro/go-zero/core/discov"
 	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/zrpc"
@@ -141,12 +142,7 @@ func NewSession(c zrpc.RpcClientConf, options SessionOptions) (*Session, error) 
 		options:     options,
 	}
 
-	cli, err := zrpc.NewClient(c)
-	if err != nil {
-		logx.Errorf("watchComet NewClient(%+v) error(%v)", c, err)
-		return nil, err
-	}
-	sess.client = sessionclient.NewSessionClient(cli)
+	sess.client = sessionclient.NewSessionClient(rpcx.GetCachedRpcClient(c))
 	sess.ctx, sess.cancel = context.WithCancel(context.Background())
 
 	for i := uint64(0); i < options.RoutineSize; i++ {

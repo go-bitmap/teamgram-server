@@ -9,6 +9,7 @@ package main
 import (
 	"context"
 
+	"github.com/teamgram/marmota/pkg/net/rpcx"
 	status_client "github.com/teamgram/teamgram-server/app/service/status/client"
 	"github.com/teamgram/teamgram-server/app/service/status/status"
 	"github.com/zeromicro/go-zero/core/conf"
@@ -27,7 +28,7 @@ func main() {
 	conf.MustLoad("./cli.yaml", &c)
 	logx.Info(c)
 
-	cli := status_client.NewStatusClient(zrpc.MustNewClient(c.StatusClient))
+	cli := status_client.NewStatusClient(rpcx.GetCachedRpcClient(c.StatusClient))
 	rList, _ := cli.StatusGetUsersOnlineSessionsList(context.Background(), &status.TLStatusGetUsersOnlineSessionsList{
 		Users: []int64{
 			136917740,

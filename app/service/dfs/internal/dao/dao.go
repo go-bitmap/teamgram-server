@@ -10,6 +10,7 @@
 package dao
 
 import (
+	"github.com/teamgram/marmota/pkg/net/rpcx"
 	"github.com/teamgram/teamgram-server/app/service/dfs/internal/config"
 	"github.com/teamgram/teamgram-server/app/service/dfs/internal/minio_util"
 	idgen_client "github.com/teamgram/teamgram-server/app/service/idgen/client"
@@ -27,7 +28,7 @@ type Dao struct {
 func New(c config.Config) *Dao {
 	return &Dao{
 		MinioUtil:    minio_util.MustNewMinioClient(&c.Minio),
-		IDGenClient2: idgen_client.NewIDGenClient2(zrpc.MustNewClient(c.IdGen)),
+		IDGenClient2: idgen_client.NewIDGenClient2(rpcx.GetCachedRpcClient(c.IdGen)),
 		ssdb:         kv.NewStore(c.SSDB),
 	}
 }
@@ -35,7 +36,7 @@ func New(c config.Config) *Dao {
 func NewDFSHelper(minio *minio_util.MinioConfig, idgen zrpc.RpcClientConf, ssdb kv.KvConf) *Dao {
 	return &Dao{
 		MinioUtil:    minio_util.MustNewMinioClient(minio),
-		IDGenClient2: idgen_client.NewIDGenClient2(zrpc.MustNewClient(idgen)),
+		IDGenClient2: idgen_client.NewIDGenClient2(rpcx.GetCachedRpcClient(idgen)),
 		ssdb:         kv.NewStore(ssdb),
 	}
 }

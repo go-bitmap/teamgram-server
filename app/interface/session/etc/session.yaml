@@ -2,31 +2,36 @@ Name: interface.session
 ListenOn: 127.0.0.1:20120
 Etcd:
   Hosts:
-    - 10.24.85.117:2379
+    - 127.0.0.1:2379
   Key: interface.session
 Cache:
-  - Host: 127.0.0.1:6379
+  - Host: 10.24.85.188:6379
 AuthSession:
   Etcd:
     Hosts:
-      - 10.24.85.117:2379
+      - 127.0.0.1:2379
     Key: service.authsession
+  Timeout: 3000
+  # 启用 gRPC KeepAlive 防止连接进入半死状态
+  KeepAlive:
+    Time: 10
+    Timeout: 3
 StatusClient:
   Etcd:
     Hosts:
-      - 10.24.85.117:2379
+      - 127.0.0.1:2379
     Key: service.status
 GatewayClient:
   Etcd:
     Hosts:
-      - 10.24.85.117:2379
+      - 127.0.0.1:2379
     Key: interface.gateway
 
 BFFProxyClients:
   Clients:
     - Etcd:
         Hosts:
-          - 10.24.85.117:2379
+          - 127.0.0.1:2379
         Key: bff.bff
       Timeout: 0
   IDMap:

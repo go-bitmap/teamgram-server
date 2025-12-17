@@ -34,3 +34,4 @@ Session:
     Hosts:
       - 10.24.85.117:2379
     Key: interface.session
+  Timeout: 10000

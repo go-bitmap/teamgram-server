@@ -1,5 +1,5 @@
 StatusClient:
   Etcd:
     Hosts:
-      - 10.24.85.117:2379
+      - 127.0.0.1:2379
     Key: service.status

@@ -2,8 +2,8 @@ Name: service.idgen
 ListenOn: 127.0.0.1:20660
 Etcd:
   Hosts:
-    - 10.24.85.117:2379
+    - 127.0.0.1:2379
   Key: service.idgen
 NodeId: 1
 SeqIDGen:
-  - Host: 127.0.0.1:6379
+  - Host: 10.24.85.188:6379

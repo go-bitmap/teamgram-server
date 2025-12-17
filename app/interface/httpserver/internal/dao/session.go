@@ -15,9 +15,9 @@ import (
 	"github.com/teamgram/teamgram-server/app/interface/httpserver/internal/config"
 	"github.com/teamgram/teamgram-server/app/interface/session/client"
 
+	"github.com/teamgram/marmota/pkg/net/rpcx"
 	"github.com/zeromicro/go-zero/core/discov"
 	"github.com/zeromicro/go-zero/core/hash"
-	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/netx"
 	"github.com/zeromicro/go-zero/core/stringx"
 	"github.com/zeromicro/go-zero/zrpc"
@@ -93,12 +93,7 @@ func (sess *Session) watch(c zrpc.RpcClientConf) {
 				continue
 			}
 			c.Endpoints = []string{v}
-			cli, err := zrpc.NewClient(c)
-			if err != nil {
-				logx.Error("watchComet NewClient(%+v) error(%v)", values, err)
-				return
-			}
-			sessionCli := sessionclient.NewSessionClient(cli)
+			sessionCli := sessionclient.NewSessionClient(rpcx.GetCachedRpcClient(c))
 			sessions[v] = sessionCli
 
 			addClis = append(addClis, sessionCli)

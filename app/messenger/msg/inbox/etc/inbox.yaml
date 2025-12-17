@@ -2,19 +2,19 @@ Name: messenger.msg.inbox
 ListenOn: 127.0.0.1:20390
 Etcd:
   Hosts:
-    - 10.24.85.117:2379
+    - 127.0.0.1:2379
   Key: messenger.msg.inbox
 
 InboxConsumer:
   Topics:
     - "Inbox-T"
   Brokers:
-    - kafka:9092
+    - 10.8.4.41:19092
   Group: "Inbox-MainCommunity-S"
 
 Mysql:
-  Addr: 127.0.0.1:3306
-  DSN: teamgram:teamgram@tcp(127.0.0.1:3306)/teamgram?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
+  Addr: 10.24.124.146:4000
+  DSN: teamgram:111111@tcp(10.24.124.146:4000)/teamgram?charset=utf8mb4&parseTime=true&loc=Asia%2FShanghai
   Active: 64
   Idle: 64
   IdleTimeout: 4h
@@ -22,25 +22,25 @@ Mysql:
   ExecTimeout: 5s
   TranTimeout: 5s
 KV:
-  - Host: 127.0.0.1:6379
+  - Host: 10.24.85.188:6379
 
 IdgenClient:
   Etcd:
     Hosts:
-      - 10.24.85.117:2379
+      - 127.0.0.1:2379
     Key: service.idgen
 UserClient:
   Etcd:
     Hosts:
-      - 10.24.85.117:2379
+      - 127.0.0.1:2379
     Key: service.biz_service
 ChatClient:
   Etcd:
     Hosts:
-      - 10.24.85.117:2379
+      - 127.0.0.1:2379
     Key: service.biz_service
 
 SyncClient:
   Topic:   "Sync-T"
   Brokers:
-    - kafka:9092
+    - 10.8.4.41:19092

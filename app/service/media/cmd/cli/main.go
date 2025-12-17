@@ -10,6 +10,7 @@ import (
 	"context"
 	"flag"
 
+	"github.com/teamgram/marmota/pkg/net/rpcx"
 	media_client "github.com/teamgram/teamgram-server/app/service/media/client"
 	"github.com/teamgram/teamgram-server/app/service/media/media"
 	"github.com/zeromicro/go-zero/core/conf"
@@ -35,7 +36,7 @@ func main() {
 	conf.MustLoad(*configFile, &c)
 	logx.Info(c)
 
-	cli := media_client.NewMediaClient(zrpc.MustNewClient(c.MediaClient))
+	cli := media_client.NewMediaClient(rpcx.GetCachedRpcClient(c.MediaClient))
 	document, err := cli.MediaGetDocument(context.Background(), &media.TLMediaGetDocument{
 		Id: *documentId,
 	})

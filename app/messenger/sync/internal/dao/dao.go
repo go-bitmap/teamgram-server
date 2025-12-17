@@ -19,7 +19,6 @@ import (
 	idgen_client "github.com/teamgram/teamgram-server/app/service/idgen/client"
 	status_client "github.com/teamgram/teamgram-server/app/service/status/client"
 	"github.com/zeromicro/go-zero/core/stores/kv"
-	"github.com/zeromicro/go-zero/zrpc"
 )
 
 type Dao struct {
@@ -40,8 +39,8 @@ func New(c config.Config) *Dao {
 		kv:             kv.NewStore(c.KV),
 		conf:           &c,
 		sessionServers: make(map[string]*Session),
-		IDGenClient2:   idgen_client.NewIDGenClient2(zrpc.MustNewClient(c.IdgenClient)),
-		StatusClient:   status_client.NewStatusClient(zrpc.MustNewClient(c.StatusClient)),
+		IDGenClient2:   idgen_client.NewIDGenClient2(rpcx.GetCachedRpcClient(c.IdgenClient)),
+		StatusClient:   status_client.NewStatusClient(rpcx.GetCachedRpcClient(c.StatusClient)),
 		ChatClient:     chat_client.NewChatClient(rpcx.GetCachedRpcClient(c.ChatClient)),
 	}
 	if c.PushClient != nil {

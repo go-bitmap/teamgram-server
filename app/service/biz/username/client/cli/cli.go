@@ -27,7 +27,7 @@ func main() {
 	)
 
 	conf.MustLoad("./cli.yaml", &c)
-	cli := username_client.NewUsernameClient(zrpc.MustNewClient(c.Username))
+	cli := username_client.NewUsernameClient(rpcx.GetCachedRpcClient(c.Username))
 	for i := 0; i < 1; i++ {
 		rValue, err := cli.UsernameGetAccountUsername(context.Background(), &username.TLUsernameGetAccountUsername{
 			UserId: 6,

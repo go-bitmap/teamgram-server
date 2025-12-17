@@ -2,7 +2,7 @@ Name: service.dfs
 ListenOn: 127.0.0.1:20640
 Etcd:
   Hosts:
-    - 10.24.85.117:2379
+    - 127.0.0.1:2379
   Key: service.dfs
 
 MiniHttp:
@@ -11,16 +11,16 @@ MiniHttp:
   Port: 11701
 
 Cache:
-  - Host: 127.0.0.1:6379
+  - Host: 10.24.85.188:6379
 Minio:
-   Endpoint: localhost:9000
-   AccessKeyID: minio
-   SecretAccessKey: miniostorage
+   Endpoint: 10.24.113.95:9000
+   AccessKeyID: 8vleXqrFMbKgOsLfZHJ1
+   SecretAccessKey: j5p18lYeRyOCuxrmoAvHWkUKacTzhwbtNPViJfqM
    UseSSL: false
 IdGen:
   Etcd:
     Hosts:
-      - 10.24.85.117:2379
+      - 127.0.0.1:2379
     Key: service.idgen
 SSDB:
   - Host: 127.0.0.1:9221

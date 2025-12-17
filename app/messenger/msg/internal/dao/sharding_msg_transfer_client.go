@@ -11,9 +11,9 @@ import (
 
 	msgtransferclient "github.com/teamgram/teamgram-server/app/messenger/msg/msgtransfer/client"
 
+	"github.com/teamgram/marmota/pkg/net/rpcx"
 	"github.com/zeromicro/go-zero/core/discov"
 	"github.com/zeromicro/go-zero/core/hash"
-	"github.com/zeromicro/go-zero/core/logx"
 	"github.com/zeromicro/go-zero/core/stringx"
 	"github.com/zeromicro/go-zero/zrpc"
 )
@@ -54,12 +54,7 @@ func (c *ShardingMsgTransferClient) watch(config zrpc.RpcClientConf) {
 				continue
 			}
 			config.Endpoints = []string{v}
-			cli, err := zrpc.NewClient(config)
-			if err != nil {
-				logx.Error("watchComet NewClient(%+v) error(%v)", values, err)
-				return
-			}
-			sessionCli := msgtransferclient.NewMsgtransferClient(cli)
+			sessionCli := msgtransferclient.NewMsgtransferClient(rpcx.GetCachedRpcClient(config))
 			clients[v] = sessionCli
 
 			addClis = append(addClis, v)
