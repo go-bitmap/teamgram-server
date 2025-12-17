@@ -66,19 +66,22 @@ func (c *Session) process(sessionChan chan sessionDataCtx) {
 				return
 			}
 
+			// 使用一个新的上下文来避免长时间运行导致的上下文取消问题
+			ctx := context.Background()
+
 			switch r := sessionData.updates.(type) {
 			case *session.TLSessionPushSessionUpdatesData:
-				_, err = c.client.SessionPushSessionUpdatesData(sessionData.ctx, r)
+				_, err = c.client.SessionPushSessionUpdatesData(ctx, r)
 				if err != nil {
 					logx.Errorf("c.client.PushSessionUpdates(%s, %v, reply) serverId:%d error(%v)", r, c.serverId, err)
 				}
 			case *session.TLSessionPushUpdatesData:
-				_, err = c.client.SessionPushUpdatesData(sessionData.ctx, r)
+				_, err = c.client.SessionPushUpdatesData(ctx, r)
 				if err != nil {
 					logx.Errorf("c.client.PushUpdates(%s, %v, reply) serverId:%d error(%v)", r, c.serverId, err)
 				}
 			case *session.TLSessionPushRpcResultData:
-				_, err = c.client.SessionPushRpcResultData(sessionData.ctx, r)
+				_, err = c.client.SessionPushRpcResultData(ctx, r)
 				if err != nil {
 					logx.Errorf("c.client.PushRpcResult(%s, %v, reply) serverId:%d error(%v)", r, c.serverId, err)
 				}
