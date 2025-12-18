@@ -60,3 +60,4 @@ app/service/dfs/internal/imaging/abc/abc
 v2
 **/logs
 **/log
+k8s

@@ -13,7 +13,7 @@ export GOOS=linux
 export GOARCH=amd64
 export CGO_ENABLED=0
 
-# 镜像仓库配置
+# 镜像仓库配置 harbor.imageharbor.xyz
 REGISTRY="192.168.30.81/teamgram"
 IMAGE_PREFIX="teamgram"
 
